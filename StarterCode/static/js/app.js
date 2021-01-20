@@ -6,8 +6,9 @@ function unpack(rows, index) {
   
 file = "samples.json"
 
-//Select all IDs from data
+//Load on landing page
 function init() {
+    //Select all IDs from data
     d3.json(file).then(function(data) {
         subjectIDs = data.names;
         //Select Drop Down
@@ -16,6 +17,7 @@ function init() {
         subjectIDs.forEach(function(d) {
             subjectIdOption.append("option").text(d);
         });
+        updateDash("940");
 });
 }
 
@@ -71,7 +73,8 @@ function buildBar(testsubject) {
             type: 'bar',
             y: otu_ids,
             x: sample_values,
-            orientation: 'h'
+            orientation: 'h',
+            text: [otu_labels]
         }
     ];
 
@@ -88,6 +91,7 @@ function buildBubble (testsubject) {
     var sample_values = (selection[0].sample_values);
     var otu_ids = (selection[0].otu_ids);
     var otu_labels = (selection[0].otu_labels);
+    console.log(otu_labels);
     //Plot collected data in bubble chart
     var data = [
         {
@@ -98,7 +102,16 @@ function buildBubble (testsubject) {
                 color: otu_ids, text: otu_labels}
         }
     ];
-    Plotly.newPlot('bubble', data);
+    var layout = {
+        xaxis : {
+            title: {
+            text: 'OTU ID',
+            size: 18
+            }
+        }
+    }
+
+    Plotly.newPlot('bubble', data, layout);
     });
 }
 
