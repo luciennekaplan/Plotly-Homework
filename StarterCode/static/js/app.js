@@ -26,26 +26,33 @@ function updateDash(testsubject) {
 
 //Update Demographics Panel
 function buildTable(testsubject) {
-    var demographics = d3.select("#sample-metadata")
+    d3.json(file).then(function(data) {
+        testsubject = parseInt(testsubject);
+        var person = data.metadata.filter(d => d.id === testsubject);
+        console.log(person);
+    });
 }
 
 //Update Bar Graph 
 function buildBar(testsubject) {
     d3.json(file).then(function(data) {
     //Grab data for selected test subject
-    var selection = data.samples.filter(d => d.id === testsubject)
+    var selection = data.samples.filter(d => d.id === testsubject);
+    console.log(selection)
     //Grab OTU_IDs and sample values from selected data
-    var sample_values = (selection[0]).sample_values
-    var otu_ids = (selection[0]).otu_ids
+    var sample_values = (selection[0].sample_values);
+    var otu_ids = (selection[0].otu_ids);
     //Plot collected data in bar graph
     var data = [
         {
-            x: otu_ids,
-            y: sample_values,
-            type: 'bar'
+            type: 'bar',
+            y: otu_ids,
+            x: sample_values,
+            orientation: 'h'
         }
     ];
 
+
     Plotly.newPlot('bar', data);
-    })
+    });
 }
