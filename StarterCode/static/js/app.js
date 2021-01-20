@@ -64,6 +64,7 @@ function buildBar(testsubject) {
     //Grab OTU_IDs and sample values from selected data
     var sample_values = (selection[0].sample_values);
     var otu_ids = (selection[0].otu_ids);
+    var otu_labels = (selection[0].otu_labels);
     //Plot collected data in bar graph
     var data = [
         {
@@ -79,9 +80,24 @@ function buildBar(testsubject) {
     });
 }
 
+//Update Bubble Chart
 function buildBubble (testsubject) {
     d3.json(file).then(function(data) {
-        
+    // Grab data for selected test subject
+    var selection = data.samples.filter(d => d.id === testsubject);
+    var sample_values = (selection[0].sample_values);
+    var otu_ids = (selection[0].otu_ids);
+    var otu_labels = (selection[0].otu_labels);
+    //Plot collected data in bubble chart
+    var data = [
+        {
+            mode: 'markers',
+            x: otu_ids,
+            y: sample_values,
+            marker: {size : [40, 60,80, 100]}
+        }
+    ];
+    Plotly.newPlot('bubble', data);
     });
 }
 
