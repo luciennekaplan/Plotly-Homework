@@ -94,7 +94,8 @@ function buildBubble (testsubject) {
             mode: 'markers',
             x: otu_ids,
             y: sample_values,
-            marker: {size : [40, 60,80, 100]}
+            marker: { size : sample_values, 
+                color: otu_ids, text: otu_labels}
         }
     ];
     Plotly.newPlot('bubble', data);
