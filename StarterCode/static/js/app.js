@@ -11,7 +11,6 @@ function optionChanged() {
 
     // Select the input value from the form
     var testsubject = d3.select("#selDataset").node().value;
-    console.log(testsubject);
 
     // Update the Dashboard!
     updateDash(testsubject);
@@ -29,7 +28,17 @@ function buildTable(testsubject) {
     d3.json(file).then(function(data) {
         testsubject = parseInt(testsubject);
         var person = data.metadata.filter(d => d.id === testsubject);
-        console.log(person);
+        var demographics = d3.select("#sample-metadata");
+        demographics.text("")
+        person.forEach(function(d) {
+            demographics.append("div").text(`ID: ${d.id}`);
+            demographics.append("div").text(`Ethnicity: ${d.ethnicity}`);
+            demographics.append("div").text(`Gender: ${d.gender}`);
+            demographics.append("div").text(`Age: ${d.age}`);
+            demographics.append("div").text(`Location: ${d.location}`);
+            demographics.append("div").text(`BB Type: ${d.bbtype}`);
+            demographics.append("div").text(`Wfreq: ${d.wfreq}`);
+        });
     });
 }
 
@@ -42,6 +51,7 @@ function buildBar(testsubject) {
     //Grab OTU_IDs and sample values from selected data
     var sample_values = (selection[0].sample_values);
     var otu_ids = (selection[0].otu_ids);
+    console.log(otu_ids)
     //Plot collected data in bar graph
     var data = [
         {
