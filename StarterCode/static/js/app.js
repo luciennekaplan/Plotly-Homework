@@ -6,6 +6,19 @@ function unpack(rows, index) {
   
 file = "samples.json"
 
+//Select all IDs from data
+function init() {
+    d3.json(file).then(function(data) {
+        subjectIDs = data.names;
+        //Select Drop Down
+        subjectIdOption = d3.select("#selDataset");
+        //Assign each subject ID as dropdown option
+        subjectIDs.forEach(function(d) {
+            subjectIdOption.append("option").text(d);
+        });
+});
+}
+
 function optionChanged() {
     //d3.event.preventDefault();
 
@@ -21,6 +34,7 @@ function optionChanged() {
 function updateDash(testsubject) {
     buildTable(testsubject);
     buildBar(testsubject);
+    buildBubble(testsubject);
   }
 
 //Update Demographics Panel
@@ -47,11 +61,9 @@ function buildBar(testsubject) {
     d3.json(file).then(function(data) {
     //Grab data for selected test subject
     var selection = data.samples.filter(d => d.id === testsubject);
-    console.log(selection)
     //Grab OTU_IDs and sample values from selected data
     var sample_values = (selection[0].sample_values);
     var otu_ids = (selection[0].otu_ids);
-    console.log(otu_ids)
     //Plot collected data in bar graph
     var data = [
         {
@@ -66,3 +78,14 @@ function buildBar(testsubject) {
     Plotly.newPlot('bar', data);
     });
 }
+
+function buildBubble (testsubject) {
+    d3.json(file).then(function(data) {
+        
+    });
+}
+
+
+
+
+init();
