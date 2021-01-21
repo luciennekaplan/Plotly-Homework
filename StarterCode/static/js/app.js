@@ -31,6 +31,7 @@ function updateDash(testsubject) {
     buildTable(testsubject);
     buildBar(testsubject);
     buildBubble(testsubject);
+    buildGauge(testsubject);
   }
 
 //Update Demographics Panel
@@ -110,6 +111,28 @@ function buildBubble (testsubject) {
     });
 }
 
+//Update Gauge Chart
+function buildGauge (testsubject) {
+    d3.json(file).then(function(data) {
+    testsubject = parseInt(testsubject);
+    var person = data.metadata.filter(d => d.id === testsubject);
+    var identifier = person[0].id;
+    var frequency = person[0].wfreq;
+    var data = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: frequency,
+            title: { text: "Belly Button Washing Frequency" },
+            type: "indicator",
+            mode: "gauge+number",
+            gauge: {
+                axis: { range: [0, 9]}
+            }
+        }
+    ];
+    Plotly.newPlot('gauge', data);
+});
+}
 
 
 
