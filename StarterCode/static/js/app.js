@@ -114,10 +114,12 @@ function buildBubble (testsubject) {
 //Update Gauge Chart
 function buildGauge (testsubject) {
     d3.json(file).then(function(data) {
+    //Grab data for selected test subject
     testsubject = parseInt(testsubject);
     var person = data.metadata.filter(d => d.id === testsubject);
     var identifier = person[0].id;
     var frequency = person[0].wfreq;
+    //Create/update gauge 
     var data = [
         {
             domain: { x: [0, 1], y: [0, 1] },
@@ -126,10 +128,21 @@ function buildGauge (testsubject) {
             type: "indicator",
             mode: "gauge+number",
             gauge: {
-                axis: { range: [0, 9]}
-            }
-        }
-    ];
+                axis: { range: [0, 9] },
+                bar: {color: "midnightblue"},
+                steps: [
+                    { range: [0, 1], color: "white" },
+                    { range: [1, 2], color: "ivory" },
+                    { range: [2, 3], color:"linen"},
+                    { range: [3, 4], color:"lavenderblush"},
+                    { range: [4, 5], color:"pink"},
+                    { range: [5, 6], color:"lightpink"},
+                    { range: [6, 7], color:"violet"},
+                    { range: [7, 8], color:"orchid"},
+                    { range: [8, 9], color:"darkorchid"},
+                      ],
+                }
+            }];
     Plotly.newPlot('gauge', data);
 });
 }
