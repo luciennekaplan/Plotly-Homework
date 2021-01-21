@@ -1,9 +1,3 @@
-function unpack(rows, index) {
-    return rows.map(function(row) {
-      return row[index];
-    });
-};
-  
 file = "samples.json"
 
 //Load on landing page
@@ -67,8 +61,8 @@ function buildBar(testsubject) {
     var sample_values = (selection[0].sample_values);
     var otu_ids = (selection[0].otu_ids);
     var otu_labels = (selection[0].otu_labels);
-    //Plot collected data in bar graph
     var y_ticks = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
+    //Plot collected data in bar graph
     var data = [
         {
             type: 'bar',
@@ -92,7 +86,6 @@ function buildBubble (testsubject) {
     var sample_values = (selection[0].sample_values);
     var otu_ids = (selection[0].otu_ids);
     var otu_labels = (selection[0].otu_labels);
-    console.log(otu_labels);
     //Plot collected data in bubble chart
     var data = [
         {
