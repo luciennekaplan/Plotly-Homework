@@ -68,13 +68,14 @@ function buildBar(testsubject) {
     var otu_ids = (selection[0].otu_ids);
     var otu_labels = (selection[0].otu_labels);
     //Plot collected data in bar graph
+    var y_ticks = otu_ids.slice(0, 10).map(otuID => `OTU ${otuID}`).reverse();
     var data = [
         {
             type: 'bar',
-            y: otu_ids,
-            x: sample_values,
+            y: y_ticks,
+            x: sample_values.slice(0, 10).reverse(),
             orientation: 'h',
-            text: [otu_labels]
+            text: otu_labels.slice(0, 10).reverse()
         }
     ];
 
@@ -98,8 +99,9 @@ function buildBubble (testsubject) {
             mode: 'markers',
             x: otu_ids,
             y: sample_values,
+            text: otu_labels,
             marker: { size : sample_values, 
-                color: otu_ids, text: otu_labels}
+                color: otu_ids}
         }
     ];
     var layout = {
